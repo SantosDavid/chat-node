@@ -1,10 +1,8 @@
-export default (class IndexController {
+import BaseController from "./BaseController";
 
-    constructor (app) {
-        this.app = app;        
-    } 
+export default (class IndexController extends BaseController {
 
-    viewIndex (req, res) {
+    viewIndex(req, res) {
         res.render('index');
     }
 });
