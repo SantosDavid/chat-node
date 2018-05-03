@@ -31,9 +31,11 @@ const io = socketIO(server);
 
 io.on('connection', function(socket){
     
-    socket.on('newUser', function(){
-        console.log('usuario conectado');
+    socket.on('newUser', function(dados){
+        io.emit('newUserConnectedMsg', {apelido: dados.apelido, mensagem: 'entrou no chat!'});
     });
 
-    console.log('user connected');
+    socket.on('newMessage', function(dados){
+        io.emit('newMessageView', {apelido: dados.apelido, mensagem: dados.mensagem});
+    })
 });

@@ -19,24 +19,11 @@
                         </div>
                     </div>
                    
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="card bg-light">
-                                    <div class="card-block">
-                                        <div class="card-body">
-                                            <label><strong><%= apelido %>:</strong></label><br>
-                                            <span style="margin-left:6%"></span>teste
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="mensagens"></div>
 
                     <div class="row">
                         <div class="col-md-11" style="margin-bottom: 1%">
-                            <input type="text" class="form-control" style="margin-left: 2%">
+                            <input type="text" class="form-control" style="margin-left: 2%" id="mensagem">
                         </div>
                         <div class="col-md-1">
                             <button class="btn btn-success">
@@ -48,10 +35,37 @@
             </div>
         </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:3000');
+        var apelido = '<%= apelido %>';
+        
+        socket.emit('newUser', {apelido: apelido});
+        
+        socket.on('newUserConnectedMsg', addMessage);
+        socket.on('newMessageView', addMessage);
+
+        $("#mensagem").on('keypress', function(event){
+            if (event.keyCode !== 13) {
+                return;
+            }
+
+            socket.emit('newMessage', {apelido: apelido, mensagem: $(this).val()});
+            $(this).val('');
+        });
+
+        function addMessage(data) {
+            
+            let html = ''+
+                    '<div class="row" style="margin-left: 0.5%">'+
+                        '<div class="col-md-9">'+
+                            '<label><strong>'+ data.apelido +':</strong></label> '+ data.mensagem+  
+                        '</div>'+
+                    '</div>';
+            
+           $("#mensagens").append(html);
+        }
     </script>
 </body>
 </head>
