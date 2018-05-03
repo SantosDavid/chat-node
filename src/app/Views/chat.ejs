@@ -8,6 +8,45 @@
     <title>Document</title>
     <% include includes/css.ejs %>
 <body>
-    <h1>Apelido <%= apelido %></h1>
+    <br>
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="card">
+                <div clas="card-block" style="border: 1px solid dimgrey">
+                    <div class="card-header bg-info">
+                        <div class="title text-center">
+                            <h3>Bem-vindo ao chat, <%= apelido %></h3>
+                        </div>
+                    </div>
+                   
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="card bg-light">
+                                    <div class="card-block">
+                                        <div class="card-body">
+                                            <label><strong><%= apelido %>:</strong></label><br>
+                                            <span style="margin-left:6%"></span>teste
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-11" style="margin-bottom: 1%">
+                            <input type="text" class="form-control" style="margin-left: 2%">
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-success">
+                                <span class="fa arrow-right">></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </head>
