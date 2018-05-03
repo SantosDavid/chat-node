@@ -15,7 +15,7 @@
                 <div clas="card-block" style="border: 1px solid dimgrey">
                     <div class="card-header bg-info">
                         <div class="title text-center">
-                            <h3>Bem-vindo ao chat, <%= apelido %></h3>
+                            <!-- <h3>Bem-vindo ao chat, <%= apelido %></h3> -->
                         </div>
                     </div>
                    
@@ -48,5 +48,10 @@
             </div>
         </div>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:3000');
+    </script>
 </body>
 </head>

@@ -21,6 +21,7 @@
     "ejs": "^2.5.9",
     "express": "^4.16.3",
     "express-validator": "^5.1.2",
-    "jslint": "^0.12.0"
+    "jslint": "^0.12.0",
+    "socket.io": "^2.1.0"
   }
 }
