@@ -9,5 +9,7 @@ export default class ChatController extends BaseController {
         if (req.validationErrors()) {
             res.redirect(402, '/index');
         }
+
+        res.render('chat', {apelido: req.query.apelido});
     }
 };
