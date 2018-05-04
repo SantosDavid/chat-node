@@ -10,22 +10,22 @@
 <body>
     <br>
     <div class="row">
-        <div class="col-md-8 offset-2">
+        <div class="col-8 offset-2">
             <div class="card">
                 <div clas="card-block" style="border: 1px solid dimgrey">
                     <div class="card-header bg-info">
                         <div class="title text-center">
-                            <!-- <h3>Bem-vindo ao chat, <%= apelido %></h3> -->
+                            <h3>Bem-vindo ao chat, <%= apelido %></h3> 
                         </div>
                     </div>
-                   
+                    <br>
                     <div id="mensagens"></div>
 
                     <div class="row">
-                        <div class="col-md-11" style="margin-bottom: 1%">
-                            <input type="text" class="form-control" style="margin-left: 2%" id="mensagem">
+                        <div class="col-11" style="margin-bottom: 1%">
+                            <input type="text" class="form-control" style="margin-left: 2%" id="mensagem" autofocus>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-1">
                             <button class="btn btn-success">
                                 <span class="fa arrow-right">></span>
                             </button>
@@ -40,8 +40,9 @@
     <script>
         var socket = io.connect('http://localhost:3000');
         var apelido = '<%= apelido %>';
+        var id = <%= id %>;
         
-        socket.emit('newUser', {apelido: apelido});
+        socket.emit('newUser', {id: id, apelido: apelido});
         
         socket.on('newUserConnectedMsg', addMessage);
         socket.on('newMessageView', addMessage);
@@ -51,15 +52,17 @@
                 return;
             }
 
-            socket.emit('newMessage', {apelido: apelido, mensagem: $(this).val()});
+            socket.emit('newMessage', {id: id, apelido: apelido, mensagem: $(this).val()});
             $(this).val('');
         });
 
         function addMessage(data) {
-            
+
+            data.apelido = (data.id === id) ? 'Você' : data.apelido;
+
             let html = ''+
                     '<div class="row" style="margin-left: 0.5%">'+
-                        '<div class="col-md-9">'+
+                        '<div class="col-9">'+
                             '<label><strong>'+ data.apelido +':</strong></label> '+ data.mensagem+  
                         '</div>'+
                     '</div>';

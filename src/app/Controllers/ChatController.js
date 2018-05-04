@@ -10,6 +10,6 @@ export default class ChatController extends BaseController {
             res.redirect(402, '/index');
         }
 
-        res.render('chat', {apelido: req.query.apelido});
+        res.render('chat', {id: Math.random(), apelido: req.query.apelido});
     }
 };

@@ -32,10 +32,10 @@ const io = socketIO(server);
 io.on('connection', function(socket){
     
     socket.on('newUser', function(dados){
-        io.emit('newUserConnectedMsg', {apelido: dados.apelido, mensagem: 'entrou no chat!'});
+        io.emit('newUserConnectedMsg', {id: dados.id, apelido: dados.apelido, mensagem: 'entrou no chat!'});
     });
 
     socket.on('newMessage', function(dados){
-        io.emit('newMessageView', {apelido: dados.apelido, mensagem: dados.mensagem});
+        io.emit('newMessageView', {id: dados.id, apelido: dados.apelido, mensagem: dados.mensagem});
     })
 });
