@@ -14,4 +14,8 @@ module.exports = function (app) {
     app.get('/login', function (req, res) {
         return chatController.login(req, res);
     });
+
+    app.get('/', function (req, res) {
+        res.redirect('/index');
+    });
 }

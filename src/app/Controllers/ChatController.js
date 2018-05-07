@@ -7,7 +7,8 @@ export default class ChatController extends BaseController {
         req.assert('apelido', 'Apelido é obrigatório').notEmpty();
 
         if (req.validationErrors()) {
-            res.redirect(402, '/index');
+            res.render('index', {errors: req.validationErrors()});
+            return;
         }
 
         res.render('chat', {id: Math.random(), apelido: req.query.apelido});

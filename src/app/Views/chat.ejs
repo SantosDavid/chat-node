@@ -5,70 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Chat</title>
     <% include includes/css.ejs %>
-<body>
-    <br>
-    <div class="row">
-        <div class="col-8 offset-2">
-            <div class="card">
-                <div clas="card-block" style="border: 1px solid dimgrey">
-                    <div class="card-header bg-info">
-                        <div class="title text-center">
-                            <h3>Bem-vindo ao chat, <%= apelido %></h3> 
-                        </div>
-                    </div>
-                    <br>
-                    <div id="mensagens"></div>
 
-                    <div class="row">
-                        <div class="col-11" style="margin-bottom: 1%">
-                            <input type="text" class="form-control" style="margin-left: 2%" id="mensagem" autofocus>
-                        </div>
-                        <div class="col-1">
-                            <button class="btn btn-success">
-                                <span class="fa arrow-right">></span>
-                            </button>
-                        </div>
+        <body>
+            <br>
+            <div class="row">
+                <div class="col-8 offset-2">
+
+                    <div class="title text-center">
+                        <h3>Bem-vindo ao chat,
+                            <%= apelido %>
+                        </h3>
+                    </div>
+                    <div style="background-color: cadetblue">
+
+                        <div id="mensagens"></div>
+
+                        <nav class="navbar fixed-bottom" role="navigation">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="col-8 offset-2">
+                                        <input type="text" class="form-control" id="mensagem" autofocus>
+                                    </div>
+                                    <div class="col-1">
+                                        <button class="btn btn-success">
+                                            <span class="fa arrow-right">></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
                     </div>
                 </div>
+                <br>
             </div>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io.connect('http://localhost:3000');
-        var apelido = '<%= apelido %>';
-        var id = <%= id %>;
-        
-        socket.emit('newUser', {id: id, apelido: apelido});
-        
-        socket.on('newUserConnectedMsg', addMessage);
-        socket.on('newMessageView', addMessage);
 
-        $("#mensagem").on('keypress', function(event){
-            if (event.keyCode !== 13) {
-                return;
-            }
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+                crossorigin="anonymous"></script>
+            <script src="/socket.io/socket.io.js"></script>
+            <script>
+                var socket = io.connect('http://localhost:3000');
+                var apelido = '<%= apelido %>';
+                var id = parseInt("<%= id %>");
 
-            socket.emit('newMessage', {id: id, apelido: apelido, mensagem: $(this).val()});
-            $(this).val('');
-        });
+                socket.emit('newUser', { id: id, apelido: apelido });
 
-        function addMessage(data) {
+                socket.on('newUserConnectedMsg', addMessage);
+                socket.on('newMessageView', addMessage);
 
-            data.apelido = (data.id === id) ? 'Você' : data.apelido;
+                $("#mensagem").on('keypress', function (event) {
+                    if (event.keyCode !== 13) {
+                        return;
+                    }
 
-            let html = ''+
-                    '<div class="row" style="margin-left: 0.5%">'+
-                        '<div class="col-9">'+
-                            '<label><strong>'+ data.apelido +':</strong></label> '+ data.mensagem+  
-                        '</div>'+
-                    '</div>';
-            
-           $("#mensagens").append(html);
-        }
-    </script>
-</body>
+                    socket.emit('newMessage', { id: id, apelido: apelido, mensagem: $(this).val() });
+                    $(this).val('');
+                });
+
+                function addMessage(data) {
+
+                    data.apelido = (data.id === id) ? 'Você' : data.apelido;
+
+                    let html = '' +
+                        '<div class="row" style="margin-left: 0.5%">' +
+                        '<div class="col-9">' +
+                        '<label><strong>' + data.apelido + ':</strong></label> ' + data.mensagem +
+                        '</div>' +
+                        '</div>';
+
+                    $("#mensagens").append(html);
+                }
+            </script>
+        </body>
 </head>

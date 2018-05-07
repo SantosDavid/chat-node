@@ -9,5 +9,3 @@ Esse projeto usa ES6, para isso fez-se necessário a utilização do babel.
 As configuração da porta do servidor pode ser alterada no arquivo <strong>src/config/server.js.</strong>
 
 Ao clonar o projeto rode <strong>npm install</strong> para instalar as dependências do projeto.
-
-### Em desenvolvimento
